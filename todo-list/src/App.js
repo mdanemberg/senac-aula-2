@@ -22,9 +22,16 @@ class App extends Component {
     })
   }
 
+  handleClick = index => {
+    this.setState({
+      list: this.state.list.filter((_, i) => {
+        return index !== i
+      })
+    })
+  }
+
   render () {
     const { task, list } = this.state
-    console.log(list)
     return (
       <div className='container'>
         <form onSubmit={this.handleSubmit} className='form'>
@@ -39,6 +46,19 @@ class App extends Component {
               +
             </button>
           </label>
+          <ul className='list'>
+            {
+              list.map((item, index) =>
+                <li
+                  onClick={
+                    () => this.handleClick(index)
+                  }
+                  className='list-item' key={index}>
+                  {item}
+                </li>
+              )
+            }
+          </ul>
         </form>
       </div>
     )
