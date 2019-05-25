@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { getCategories } from '../../services/category'
+import { saveCategories } from '../../redux/modules/category'
 
 class CategoriesList extends Component {
     state = {
         isLoading: true,
-        hasError: false,
-        data: []
+        hasError: false
     }
   async componentDidMount () {
     try {
         const response = await getCategories()
         this.setState({
-            isLoading: false,
-            data: response.data
+            isLoading: false
         })
+        this.props.saveCategories(response.data)
     } catch (error) {
         this.setState({
             isLoading: false,
@@ -23,7 +24,9 @@ class CategoriesList extends Component {
   }
 
   render () {
-      const { data, isLoading, hasError } = this.state
+      const { isLoading, hasError } = this.state
+      const { categories } = this.props
+      console.log(categories)
 
     if (hasError) {
         return <span>DEU RUIM</span>
@@ -35,7 +38,7 @@ class CategoriesList extends Component {
       <div>
           <ul>
               {
-                  data.map(item => {
+                  categories.map(item => {
                     return (
                         <li key={item.id}>
                             {item.name}
@@ -49,4 +52,16 @@ class CategoriesList extends Component {
   }
 }
 
-export default CategoriesList
+const mapStateToProps = state => {
+    return {
+        categories: state.categories.data
+    }
+}
+
+const mapDispatchToProps = {
+    saveCategories
+}
+
+
+export default
+connect(mapStateToProps, mapDispatchToProps)(CategoriesList)
