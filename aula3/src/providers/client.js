@@ -1,13 +1,22 @@
 import axios from 'axios'
 import { getToken } from '../helpers/auth'
 
-const instance = () => {
-  const token = getToken()
-  return axios.create({
-    baseURL: 'https://senac-shopping-list-api.herokuapp.com/v1/',
-    headers: {'Authorization': token
-      ? `Bearer ${token}` : ''}
+
+const fetchClient = () => {
+  const defaultOptions = {
+    baseURL: 'https://senac-shopping-list-api.herokuapp.com/v1/'
+  }
+
+  let instance = axios.create(defaultOptions)
+  instance.interceptors.request.use(async config => {
+    const token = await getToken()
+    if (token) {
+      config.headers.Authorization = token ? `Bearer ${token}` : ''
+    }
+    return config
   })
+
+  return instance
 }
 
-export default instance()
+export default fetchClient()

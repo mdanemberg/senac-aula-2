@@ -16,7 +16,12 @@ const Auth = createStackNavigator({
 })
 
 const Internal = createStackNavigator({
-  Home
+  Home: {
+    screen: Home,
+    navigationOptions: {
+      title: 'Home'
+    }
+  }
 })
 
 const Root = createSwitchNavigator({
