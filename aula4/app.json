@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "aula4",
-    "slug": "aula4",
+    "name": "aula4-chat",
+    "slug": "aula4-chat",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [
