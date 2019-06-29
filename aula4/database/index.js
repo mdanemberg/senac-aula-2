@@ -27,6 +27,9 @@ export const getMessages = async (page, perPage) => {
     return {
         messages: getPage(messagesToSend.reverse(), perPage, page),
         page,
-        perPage
+        perPage,
+        totalPages: messagesToSend.length > perPage
+            ? Math.floor(messagesToSend.length / perPage)
+            : 1
     }
 }

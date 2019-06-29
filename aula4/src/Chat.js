@@ -10,22 +10,13 @@ const ws = Socket('https://senac-shopping-list-api.herokuapp.com', {
   jsonp: false
 })
 
-// {
-//     _id: 1,
-//     text: 'My message',
-//     createdAt: new Date(),
-//     user: {
-//         _id: 2,
-//         name: 'React Native',
-//     }
-// }
-
 const myId = 'joao'
-const perPage = 5
+const perPage = 10
 
 const Chat = () => {
     const [messages, setMessages] = useState([])
     const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
@@ -55,9 +46,10 @@ const Chat = () => {
     const listMessages = async () => {
         const messagesList = await getMessages(page, perPage)
         console.log('messages list', messagesList)
+        setTotalPages(messagesList.totalPages)
         setIsLoading(false)
         setMessages(
-            GiftedChat.append(messages, messagesList.messages)
+            GiftedChat.prepend(messages, messagesList.messages)
         )
     }
 
@@ -80,7 +72,8 @@ const Chat = () => {
 
     return (
         <GiftedChat
-            loadEarlier={isLoading}
+            isLoadingEarlier={isLoading}
+            loadEarlier={page <= totalPages}
             onLoadEarlier={loadNextPage}
             messages={messages}
             onSend={sendMessage}
