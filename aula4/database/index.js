@@ -23,8 +23,9 @@ export const store = async message => {
 
 export const getMessages = async (page, perPage) => {
     const messages = await AsyncStorage.getItem('messages')
+    const messagesToSend = messages ? JSON.parse(messages) : []
     return {
-        messages: messages ? getPage(JSON.parse(messages), perPage, page) : [],
+        messages: getPage(messagesToSend.reverse(), perPage, page),
         page,
         perPage
     }
