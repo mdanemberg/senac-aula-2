@@ -16,7 +16,7 @@ const getPage = (messages = [], perPage = 10, page = 1) => {
 
 export const store = async message => {
     const messages = await AsyncStorage.getItem('messages')
-    const oldMessages = messages ? JSON.parse(messages.filter(message => message._id))  : []
+    const oldMessages = messages ? JSON.parse(messages)  : []
     const listMessages = JSON.stringify([...oldMessages, message])
     await AsyncStorage.setItem('messages', listMessages)
 }
@@ -30,6 +30,6 @@ export const getMessages = async (page, perPage) => {
         perPage,
         totalPages: messagesToSend.length > perPage
             ? Math.floor(messagesToSend.length / perPage)
-            : 1
+            : 0
     }
 }
