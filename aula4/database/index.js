@@ -17,14 +17,14 @@ const getPage = (messages = [], perPage = 10, page = 1) => {
 export const store = async message => {
     const messages = await AsyncStorage.getItem('messages')
     await AsyncStorage.setItem('messages',
-        [message, ...(messages && messages)]
+        JSON.stringify([message, ...(messages && messages)])
     )
 }
 
 export const getMessages = async (page, perPage) => {
     const messages = await AsyncStorage.getItem('messages')
     return {
-        messages: messages ? getPage(messages, perPage, page) : [],
+        messages: messages ? getPage(JSON.parse(messages), perPage, page) : [],
         page,
         perPage
     }

@@ -29,6 +29,7 @@ const Chat = () => {
     useEffect(() => {
         ws.connect()
         ws.on('message', message => {
+            setMessage(message)
             if (myId !== message.user._id) {
                 setMessages(GiftedChat.append(messages, [message]))
             }
@@ -39,9 +40,15 @@ const Chat = () => {
         listMessages()
     }, [])
 
+    const setMessage = async message => {
+        await store(message)
+    }
+
     const listMessages = async () => {
         const messagesList = await getMessages(page, perPage)
-        console.log(messagesList)
+        setMessages(
+            GiftedChat.append(messages, messagesList.messages)
+        )
     }
 
     const sendMessage = newMessages => {
