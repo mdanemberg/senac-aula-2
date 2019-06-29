@@ -17,7 +17,7 @@ const getPage = (messages = [], perPage = 10, page = 1) => {
 export const store = async message => {
     const messages = await AsyncStorage.getItem('messages')
     const oldMessages = messages ? JSON.parse(messages)  : []
-    const listMessages = JSON.stringify([message, ...oldMessages])
+    const listMessages = JSON.stringify([...oldMessages, message])
     await AsyncStorage.setItem('messages', listMessages)
 }
 
