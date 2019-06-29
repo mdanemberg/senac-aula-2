@@ -45,7 +45,6 @@ const Chat = () => {
 
     const listMessages = async () => {
         const messagesList = await getMessages(page, perPage)
-        console.log('messages list', messagesList)
         setTotalPages(messagesList.totalPages)
         setIsLoading(false)
         setMessages(
