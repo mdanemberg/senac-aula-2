@@ -29,9 +29,10 @@ const Chat = () => {
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        clear()
+        // clear()
         ws.connect()
         ws.on('message', message => {
+            console.log(message)
             setMessage(message)
             if (myId !== message.user._id) {
                 setMessages(GiftedChat.append(messages, [message]))
@@ -53,6 +54,7 @@ const Chat = () => {
 
     const listMessages = async () => {
         const messagesList = await getMessages(page, perPage)
+        console.log('messages list', messagesList)
         setIsLoading(false)
         setMessages(
             GiftedChat.append(messages, messagesList.messages)
@@ -83,6 +85,7 @@ const Chat = () => {
             messages={messages}
             onSend={sendMessage}
             renderAvatar={null}
+            renderUsernameOnMessage
             user={{
                 _id: myId
             }}
