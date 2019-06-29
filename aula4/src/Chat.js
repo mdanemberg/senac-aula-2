@@ -68,7 +68,7 @@ const Chat = () => {
             }
         ]
         setMessages(GiftedChat.append(messages, namedMessage))
-        ws.emit('message', newMessages[0])
+        ws.emit('message', namedMessage[0])
     }
 
     const loadNextPage = () => {
