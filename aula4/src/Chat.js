@@ -17,9 +17,10 @@ const ws = Socket('https://senac-shopping-list-api.herokuapp.com', {
 //     }
 // }
 
+const myId = 1
+
 const Chat = () => {
     const [messages, setMessages] = useState([])
-    const myId = 1
 
     useEffect(() => {
         ws.connect()
